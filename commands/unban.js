@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: "unban",
     run: async(client, message, args) => {
-        if (!client.config.banMembers.some(id => message.member.roles.cache.has(id))) {
+        if (!client.config.banMembers.some(id => message.member.roles.cache.has(id))&& (!message.member.hasPermission("ADMINISTRATOR"))) {
             return message.channel.send(embed.setDescription("Bu Komut İçin Yetkin Bulunmuyor."))
         }
         let embed = new Discord.MessageEmbed().setAuthor(message.member.displayName, message.author.avatarURL({ dynamic: true })).setTimestamp().setThumbnail(message.author.avatarURL);
