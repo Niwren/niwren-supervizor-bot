@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: "toplutaşı",
     run: async(client, message, args) => {
-        if (!client.config.üstYönetim.some(id => message.member.roles.cache.has(id))) {
+        if (!client.config.üstYönetim.some(id => message.member.roles.cache.has(id))&& (!message.member.hasPermission("ADMINISTRATOR"))) {
             return message.channel.send(new Discord.MessageEmbed().setAuthor(message.member.displayName, message.author.avatarURL({ dynamic: true })).setDescription('Komutu kullanan kullanıcıda yetki bulunmamakta!').setColor('#ff0000').setTimestamp().setThumbnail(message.author.avatarURL))
         }
         let channel = args[0];
