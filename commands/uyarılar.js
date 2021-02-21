@@ -5,7 +5,7 @@ module.exports = {
     run: async(client, message, args) => {
         let embed2 = new Discord.MessageEmbed().setAuthor(message.member.displayName, message.author.avatarURL({ dynamic: true })).setColor('#ff0000').setTimestamp()
 
-        if (!client.config.jailMembers.some(id => message.member.roles.cache.has(id))) {
+        if (!client.config.jailMembers.some(id => message.member.roles.cache.has(id))&& (!message.member.hasPermission("ADMINISTRATOR"))) {
             return message.channel.send(embed2.setDescription("Bu Komut İçin Yetkin Bulunmuyor."))
         }
         let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
