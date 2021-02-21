@@ -8,7 +8,7 @@ const db = require('quick.db');
 module.exports = {
     name: "uyar",
     run: async(client, message, args) => {
-        if (!client.config.jailMembers.some(id => message.member.roles.cache.has(id))) {
+        if (!client.config.jailMembers.some(id => message.member.roles.cache.has(id))&& (!message.member.hasPermission("ADMINISTRATOR"))) {
             return message.channel.send(embed.setDescription("Komutu kullanan kullanıcıda gerekli yetki bulunmuyor!"))
         }
         let channel = client.guilds.cache.get(client.config.guildID).channels.cache.find(c => c.name === "mute-log")
