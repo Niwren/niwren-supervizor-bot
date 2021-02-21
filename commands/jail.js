@@ -9,12 +9,11 @@ module.exports = {
     aliases: ["yargı", "mahkum"],
     run: async(client, message, args) => {
         let embed = new Discord.MessageEmbed().setAuthor(message.member.displayName, message.author.avatarURL({ dynamic: true })).setTimestamp().setThumbnail(message.author.avatarURL);
-        if (!client.config.jailMembers.some(id => message.member.roles.cache.has(id))) {
-            return message.channel.send(embed.setDescription("Bu Komut İçin Yetkin Bulunmuyor."))
-        }
+        if (!client.config.jailMembers.some(id => message.member.roles.cache.has(id))&& (!message.member.hasPermission("ADMINISTRATOR"))) {
+            return message.channel.send(embed.setDescription('Komutu kullanan kullanıcıda yetki bulunmamakta!')).then(x => x.delete({ timeout: 5000 }))
+        }  
         let channel = client.guilds.cache.get(client.config.guildID).channels.cache.find(c => c.name === "jail-log")
         let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-        let embed2 = new Discord.MessageEmbed().setAuthor(member.user.tag, member.user.displayAvatarURL({ dynamic: true })).setThumbnail(member.user.avatarURL({ dynamic: true })).setTimestamp().setFooter(`${message.author.tag} yetkilisi tarafından atıldı`);
         moment.locale('tr')
         if (!member) return message.channel.send(embed.setDescription("Kullanıcı etiketlenmedi veya bulunamadı!")).then(x => x.delete({ timeout: 5000 }))
         if (member.roles.highest.position >= message.member.roles.highest.position) {
@@ -40,10 +39,10 @@ module.exports = {
         db.set(`xxhub_${member.id}`, member.roles.cache.map(s => s))
         db.push(`jaildekimallar_${message.author.id}`, { id: member.id, roller: member.roles.cache.map(s => s) })
         db.push(`olçmebaşlat_${message.author.id}`, { time: Date.now() });
-        channel.send(embed2.setTitle('Kullanıcı Hapishaneye Atıldı').setDescription(`Yetkili: ${message.author} - \`${message.author.id}\` \n Jaile Atılan: ${member} - \`${member.id}\` \n Sebep: ${reason} \n Süre: ${time} \n Tarih: **${moment().format('LLL')}**`))
+        channel.send(embed.setTitle('Kullanıcı Hapishaneye Atıldı').setDescription(`Yetkili: ${message.author} - \`${message.author.id}\` \n Jaile Atılan: ${member} - \`${member.id}\` \n Sebep: ${reason} \n Süre: ${time} \n Tarih: **${moment().format('LLL')}**`))
         if (time) setTimeout(() => {
             member.roles.set(db.get(`xxhub_${member.id}`).map(s => s.id))
-            channel.send(embed2.setTitle('Kullanıcı Tahliye Oldu').setDescription(`${member} Adlı Kullanıcının Tahliye Oldu!`))
+            channel.send(embed.setTitle('Kullanıcı Tahliye Oldu').setDescription(`${member} Adlı Kullanıcının Tahliye Oldu!`))
         }, jailzaman)
     }
 }
