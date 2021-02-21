@@ -8,7 +8,7 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed().setAuthor(message.member.displayName, message.author.avatarURL({ dynamic: true })).setColor('#ff0000').setTimestamp()
         let channel = client.guilds.cache.get(client.config.guildID).channels.cache.find(c => c.name === "ban-log") //log kanalının ismi
-        if (!client.config.banMembers.some(id => message.member.roles.cache.has(id))) {
+        if (!client.config.banMembers.some(id => message.member.roles.cache.has(id))&& (!message.member.hasPermission("ADMINISTRATOR"))) {
             return message.channel.send(embed.setDescription('Komutu kullanan kullanıcıda yetki bulunmamakta!')).then(x => x.delete({ timeout: 5000 }))
         }
         let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
