@@ -7,7 +7,7 @@ module.exports = {
     run: async(client, message, args) => {
 
         let embed = new Discord.MessageEmbed().setAuthor(message.member.displayName, message.author.avatarURL({ dynamic: true })).setColor('#ff0000').setTimestamp().setFooter('Muratva Stark X İngiltereli X Niwren');
-        if (!client.config.mods.some(id => message.member.roles.cache.has(id))) {
+        if (!client.config.mods.some(id => message.member.roles.cache.has(id))&& (!message.member.hasPermission("ADMINISTRATOR"))) {
             return message.channel.send(embed.setDescription("Bu Komut İçin Yetkin Bulunmuyor."))
         }
         //    if (message.channel.id !== client.config.channelID) return message.channel.send(embed.setDescription('Komutu sadece <#${client.config.channelID}> analında kullanabilirsin'))
