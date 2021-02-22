@@ -39,10 +39,6 @@ client.on('ready', () => {
         });
     });
 })
-/*kullanırsınız diye stata ödül sistemi ekledim*/
-client.rewards = [
-  { role: "785163569502617650", ses: 10000, yazı: 1000 }
-] // sesdeki 10000 = 10 saniye 
 
 client.config = {
     token: 'ODEyMjg2MTg0MTEzNDM4NzQx.YC-idQ.-BqLGv5Wlxdp_s4mN84e1aBvGmY', //token
@@ -256,15 +252,7 @@ client.on('message', async(message) => {
 
   let dataTwo = db.get(`voiceData.${message.author.id}`) || {}
   let dataVoice =  Object.keys(dataTwo).map(data => { return Object.values(dataTwo[data]).reduce((a, b) => a + b, 0) })[0];
-  if(client.rewards.length >= 1){
-    client.rewards.forEach(data => {
-      if(dataMessage >= data.yazı){
-        message.member.roles.add(data.role)
-      } else if(dataVoice >= data.ses){
-        message.member.roles.add(data.role)
-      }
-    }) 
-  }
+}
 })
 
 const Activites = new Map();
