@@ -1,7 +1,7 @@
 const db = require('quick.db');
 const Discord = require('discord.js');
 module.exports = {
-    name: "afk",
+    name: "staffdm",
     run: async(client, message, args) => {
   let kullanıcı = message.guild.members.cache.filter(s => s.roles.cache.has(client.config)).filter(s => !s.voice.channel).size
   for(var i = 0;i < kullanıcı;i++){
