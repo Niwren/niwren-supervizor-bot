@@ -1,6 +1,8 @@
-const Discord = require("discord.js"); 
-
-exports.run = async (client, message, args) => {
+const db = require('quick.db');
+const Discord = require('discord.js');
+module.exports = {
+    name: "afk",
+    run: async(client, message, args) => {
   let kullanıcı = message.guild.members.cache.filter(s => s.roles.cache.has(client.config)).filter(s => !s.voice.channel).size
   for(var i = 0;i < kullanıcı;i++){
     let a = message.guild.members.cache.filter(s => s.roles.cache.has(client.config)).filter(s => !s.voice.channel).map(a => a)[i]
@@ -13,16 +15,5 @@ try {
   }
     
 };
-
-exports.conf = {
-  enabled: true, 
-  guildOnly: false,
-  aliases: ["yetkilidm", "staffdm"], 
-  permLevel: 0 
-};
-
-exports.help = {
-  name: "ysay", 
-  description: "",
-  usage: "" 
-};
+    }
+}
